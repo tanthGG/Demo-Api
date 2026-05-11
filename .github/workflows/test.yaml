@@ -54,7 +54,7 @@ jobs:
             ${{ secrets.DOCKERHUB_IMAGE }}:latest
             ${{ secrets.DOCKERHUB_IMAGE }}:${{ github.run_number }}
 
-    pull:
+  pull:
     name: Pull image
     needs: build-and-push
     runs-on:
