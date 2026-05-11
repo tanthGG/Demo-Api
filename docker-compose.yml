@@ -1,6 +1,6 @@
 services:
   tuya-api:
-    image: ${DOCKER_IMAGE}:latest
-    container_name: demo-deploy-api
+    image: tanth811/demo-api:latest
+    container_name: demo-deploy-api-tanth
     restart: unless-stopped
 
