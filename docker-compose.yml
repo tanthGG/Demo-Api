@@ -5,6 +5,8 @@ services:
     restart: unless-stopped
     networks:
       - app
+    env_file:
+      - .env
 
 networks:
   app:
