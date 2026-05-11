@@ -6,4 +6,4 @@ node_modules/
 dist/
 build/
 demo-api
-go.sum
+
