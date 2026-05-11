@@ -1,4 +1,4 @@
-module github.com/tanthGG/Demo-Api
+module github.com/tanthgg/demo-api
 
 go 1.25.0
 
