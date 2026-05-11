@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
 )
 
 var startTime = time.Now()
@@ -39,11 +39,10 @@ type RootResponse struct {
 }
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
-	router := gin.Default()
+	e := echo.New()
 
 	// Root endpoint
-	router.GET("/", func(c *gin.Context) {
+	e.GET("/", func(c echo.Context) error {
 		response := RootResponse{
 			Message: "Demo API is running",
 			Endpoints: map[string]string{
@@ -51,21 +50,21 @@ func main() {
 				"detailedHealth": "/health/detailed",
 			},
 		}
-		c.JSON(http.StatusOK, response)
+		return c.JSON(http.StatusOK, response)
 	})
 
 	// Basic health check endpoint
-	router.GET("/health", func(c *gin.Context) {
+	e.GET("/health", func(c echo.Context) error {
 		response := HealthResponse{
 			Status:    "UP",
 			Timestamp: time.Now().UTC().Format(time.RFC3339),
 			Uptime:    time.Since(startTime).Seconds(),
 		}
-		c.JSON(http.StatusOK, response)
+		return c.JSON(http.StatusOK, response)
 	})
 
 	// Detailed health check endpoint
-	router.GET("/health/detailed", func(c *gin.Context) {
+	e.GET("/health/detailed", func(c echo.Context) error {
 		var m runtime.MemStats
 		runtime.ReadMemStats(&m)
 
@@ -87,7 +86,7 @@ func main() {
 				NumGC:      m.NumGC,
 			},
 		}
-		c.JSON(http.StatusOK, response)
+		return c.JSON(http.StatusOK, response)
 	})
 
 	port := os.Getenv("PORT")
@@ -95,5 +94,5 @@ func main() {
 		port = "3000"
 	}
 
-	router.Run(":" + port)
+	e.Logger.Fatal(e.Start(":" + port))
 }
