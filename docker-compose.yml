@@ -3,4 +3,9 @@ services:
     image: tanth811/demo-api:latest
     container_name: demo-deploy-api-tanth
     restart: unless-stopped
+    networks:
+      - app
 
+networks:
+  app:
+    external: true
