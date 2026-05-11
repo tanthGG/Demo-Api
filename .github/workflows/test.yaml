@@ -53,3 +53,19 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_IMAGE }}:latest
             ${{ secrets.DOCKERHUB_IMAGE }}:${{ github.run_number }}
+
+    pull:
+    name: Pull image
+    needs: build-and-push
+    runs-on:
+      - ubuntu-latest
+    environment: DEV
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Pull image from Docker Hub
+        run: docker pull ${{ secrets.DOCKERHUB_IMAGE }}:latest
