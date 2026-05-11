@@ -1,0 +1,6 @@
+services:
+  tuya-api:
+    image: ${DOCKER_IMAGE}:latest
+    container_name: demo-deploy-api
+    restart: unless-stopped
+
