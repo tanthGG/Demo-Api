@@ -7,11 +7,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-  hello:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - name: Hello world action
-      run: echo "Hello world"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.25"
+
+      - name: Test Coverage
+        run: |
+          go test -coverprofile=coverage.out ./...
+          go tool cover -func=coverage.out
 
   build:
     runs-on: ubuntu-latest
