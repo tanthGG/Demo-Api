@@ -58,7 +58,7 @@ jobs:
     name: Pull image
     needs: build-and-push
     runs-on:
-      - ubuntu-latest
+      - self-hosted
     environment: DEV
     steps:
       - name: Log in to Docker Hub
